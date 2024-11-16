@@ -1,0 +1,13 @@
+﻿@model PinterestApp.Models.ApplicationUser
+
+<form method="post" action="/Users/Edit/@Model.Id">
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <p class="eu11">Introdu username-ul nou:</p>
+    @Html.EditorFor(m => m.User_name, new { htmlAttributes = new { @class = "form-control" } })
+    <p>@Html.ValidationMessage("User_name", null, new { @class = "text-danger" })</p>
+    <br /><br />
+    <button class="btn btn-success eu4" type="submit">Modifica</button>
+
+</form>
+

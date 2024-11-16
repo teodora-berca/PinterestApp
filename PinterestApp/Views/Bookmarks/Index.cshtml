@@ -1,0 +1,91 @@
+﻿<h2 class="text-center">Afișare bookmark-uri</h2>
+<br />
+<br />
+
+@if(TempData["message"]!=null)
+{
+    @if(ViewBag.Tip=="1")
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-check-circle"></i>@ViewBag.message</div>
+    }
+    else
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-exclamation-triangle-fill"></i>@ViewBag.message</div>
+    }
+}
+
+@* search *@
+
+@* <form method="GET">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control"
+               placeholder="Cautare" name="search"
+               value="@ViewBag.SearchString">
+        <button class="btn btn-outline-primary"
+                type="submit">
+            Search
+        </button>
+    </div>
+</form> *@
+
+@*Parcurgerea tuturor bookmark-urilor*@
+@foreach (PinterestApp.Models.Bookmark bookmark in ViewBag.Bookmarks)
+{
+   
+   <div class="card eu">
+
+        <div class="card-body">
+
+                <div class="card-text eu15" id="media-content">@Html.Raw(bookmark.MediaContent)</div>
+
+                <h3 class="card-title alert-primary py-3 px-3 rounded-2">@bookmark.Title</h3>
+
+                <div class="card-text">@bookmark.Description</div>
+
+                <div class="d-flex justify-content-between flex-row mt-5">
+
+                    <a class="btn btn-primary" href="/Bookmarks/Show/@bookmark.Id">Afisare bookmark</a>
+
+                    <span class="alert-primary px-1 align-content-center">@bookmark.Date</span>
+                    
+                <a class="btn btn-primary" href="/Users/ViewUser/@bookmark.User.Id">@bookmark.User.UserName</a>
+
+                </div>
+
+        </div>
+
+    </div>
+    <br />
+    <br />
+}
+
+
+@* Afisarea paginata a bookmark-urilor si in cazul in care se foloseste motorul de cautare *@
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"
+                   href="@ViewBag.PaginationBaseUrl=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       href="@ViewBag.PaginationBaseUrl=@i">@(i)</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link"
+                   href="@ViewBag.PaginationBaseUrl=@(ViewBag.lastPage)" aria-
+                   label="Next">
+
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+

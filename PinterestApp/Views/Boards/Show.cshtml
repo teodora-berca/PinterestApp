@@ -1,0 +1,62 @@
+﻿@model PinterestApp.Models.Board
+
+<h2>@Model.Title</h2>
+
+<br />
+
+@foreach(PinterestApp.Models.SavedBookmark savedBookmark in Model.SavedBookmarks)
+{
+    <div class="card">
+
+        <div class="card-body">
+
+            <div class="card-text" id="media-content">@Html.Raw(savedBookmark.Bookmark.MediaContent)</div>
+
+            <h3 class="card-title alert-primary py-3 px-3 rounded-2">@savedBookmark.Bookmark.Title</h3>
+
+            <div class="card-text">@savedBookmark.Bookmark.Description</div>
+
+            <div class="d-flex justify-content-between flex-row mt-5">
+
+                <a class="btn btn-primary" href="/Bookmarks/Show/@savedBookmark.Bookmark.Id">Afisare bookmark</a>
+
+                <span class="alert-primary px-1 align-content-center">@savedBookmark.Bookmark.Date</span>
+
+                <a class="btn btn-primary" href="/Profile/ViewProfile/@savedBookmark.Bookmark.User.Id">@savedBookmark.Bookmark.User.UserName</a>
+
+            </div>
+
+        </div>
+
+        <span class="alert-primary px-1 align-content-center">@savedBookmark.SavingDate</span>
+
+        <br />
+
+        <div class="d-flex flex-row justify-content-between">
+
+            <form method="post" action="/Boards/DeleteBookmark/@savedBookmark.Id">
+
+                <button class="btn btn-danger eu8" type="submit">Elimina bookmark din board!</button>
+
+            </form>
+
+        </div>
+
+    </div>
+    <br />
+    <br />
+}
+
+
+
+<div class="d-flex justify-content-between flex-row mt-5">
+
+    <a class="btn btn-primary" href="/Boards/Edit/@Model.Id"><i class="bi bi-pencil"></i>Editare board</a>
+
+<form method="post" action="/Boards/Delete/@Model.Id">
+
+        <button class="btn btn-primary" type="submit"><i class="bi bi-eraser"></i>Sterge board</button>
+
+</form>
+
+</div>

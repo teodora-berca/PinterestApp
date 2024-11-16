@@ -1,0 +1,31 @@
+﻿@model PinterestApp.Models.Bookmark
+
+<h2>Adaugare bookmark</h2>
+<br />
+
+<form method="post" action="/Bookmarks/New">
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <label>Titlu bookmark:</label>
+    @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+    <p>@Html.ValidationMessage("Title", null, new { @class = "text-danger" })</p>
+    <br />
+    <br />
+
+    <label>Descriere bookmark:</label>
+    @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+    <p>@Html.ValidationMessage("Description", null, new { @class = "text-danger" })</p>
+    <br />
+    <br />
+
+    <label>Continut bookmark:</label>
+    @Html.TextArea("MediaContent", null, new { @class = "summernote" })
+    <p>@Html.ValidationMessage("MediaContent", null, new { @class = "text-danger" })</p>
+    <div class="card-text"></div>
+    <br />
+    <br />
+
+    <button class="btn eu8" type="submit">Adauga bookmark</button>
+
+</form>
+
+

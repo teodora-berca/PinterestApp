@@ -1,0 +1,27 @@
+﻿@model PinterestApp.Models.Bookmark
+
+<form method="post" action="/Bookmarks/Edit/@Model.Id">
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <label>Titlu bookmark:</label>
+    @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+    <p>@Html.ValidationMessage("Title", null, new { @class = "text-danger" })</p>
+    <br /><br />
+
+    <label>Descriere:</label>
+    @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+    <p>@Html.ValidationMessage("Description", null, new { @class = "text-danger" })</p>
+    <br />
+
+    <label>Continut:</label>
+    @Html.TextArea("MediaContent", null, new { @class = "summernote" })
+    <p>@Html.ValidationMessage("MediaContent", null, new { @class = "text-danger" })</p>
+    <br />
+
+    <br /><br />
+
+    <button class="btn btn-success eu4" type="submit">Modifica bookmark</button>
+
+</form>
+
+

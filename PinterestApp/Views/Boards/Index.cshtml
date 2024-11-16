@@ -1,0 +1,43 @@
+﻿@model PinterestApp.Models.Board
+
+<h2 class="eu2">Board-urile tale!</h2>
+
+<br />
+<br />
+
+@if (TempData["message"] != null)
+{
+    @if (ViewBag.Tip == "1")
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-check-circle"></i>@ViewBag.message</div>
+    }
+    else
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-exclamation-triangle-fill"></i>@ViewBag.message</div>
+    }
+}
+
+<br />
+<br />
+
+<a class="btn btn-primary"  href="/Boards/New"><i class="bi bi-plus-circle"></i>Add Board!</a>
+
+<br />
+<br />
+
+@foreach (PinterestApp.Models.Board board in ViewBag.Boards)
+{
+    <div class="card eu1">
+        <div class="card-body">
+            <h3 class="card-title alert-primary py-3 px-3 rounded-2">@board.Title</h3>
+         
+            <div class="d-flex justify-content-between flex-row mt-5 eu3">
+
+                <a class="btn btn-primary" href="/Boards/Show/@board.Id">Vizualizare articole board</a>
+
+            </div>
+        </div>
+    </div>
+
+    <br />
+}

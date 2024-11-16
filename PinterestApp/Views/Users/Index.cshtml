@@ -1,0 +1,54 @@
+﻿@model PinterestApp.Models.Board
+
+<h2 class="eu13">Profil @ViewBag.User.User_name</h2>
+<br />
+<br />
+<a class="btn btn-primary eu12" href="/Users/Edit/@ViewBag.User.Id"><i class="bi bi-gear"></i></a>
+
+@if (TempData["message"] != null)
+{
+    @if (ViewBag.Tip == "1")
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-check-circle"></i>@ViewBag.message</div>
+    }
+    else
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-exclamation-triangle-fill"></i>@ViewBag.message</div>
+    }
+}
+
+
+
+@foreach (PinterestApp.Models.Board board in ViewBag.Boards)
+{
+    @foreach (SavedBookmark savedBookmark in board.SavedBookmarks)
+    {
+        <div class="card">
+
+            <div class="card-body">
+
+                <div class="card-text" id="media-content">@Html.Raw(savedBookmark.Bookmark.MediaContent)</div>
+
+                <h3 class="card-title alert-primary py-3 px-3 rounded-2">@savedBookmark.Bookmark.Title</h3>
+
+                <div class="card-text">@savedBookmark.Bookmark.Description</div>
+
+                <div class="d-flex justify-content-between flex-row mt-5">
+
+                    <a class="btn btn-primary" href="/Bookmarks/Show/@savedBookmark.Bookmark.Id">Afisare bookmark</a>
+
+                    <span class="alert-primary px-1 align-content-center">@savedBookmark.Bookmark.Date</span>
+
+                    <a class="btn btn-primary" href="/Users/ViewUser/@savedBookmark.Bookmark.User.Id">@savedBookmark.Bookmark.User.UserName</a>
+
+                </div>
+
+            </div>
+
+            <span class="alert-primary px-1 align-content-center">@savedBookmark.SavingDate</span>
+
+            <br />
+        </div>
+    }
+
+}

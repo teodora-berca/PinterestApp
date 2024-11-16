@@ -1,0 +1,197 @@
+﻿@model PinterestApp.Models.Bookmark
+
+@if (TempData["message"] != null)
+{
+    @if (ViewBag.Tip == "1")
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-check-circle"></i>@ViewBag.message</div>
+    }
+    else
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-exclamation-triangle-fill"></i>@ViewBag.message</div>
+    }
+}
+
+
+
+<div class="card">
+
+    <div class="card-body">
+        <div class="card-text">@Html.Raw(Model.MediaContent)</div>
+
+        <h3 class="card-title alert-primary py-3 px-3 rounded-2">@Model.Title</h3>
+
+        <div class="card-text">@Model.Description</div>
+
+        <div class="d-flex justify-content-between flex-row mt-5">
+
+            <span class="alert-primary">@Model.Date</span>
+
+            <a class="btn btn-primary" href="/Users/ViewUser/@Model.User.Id">@Model.User.UserName</a>
+
+        </div>
+
+    </div>
+
+    <hr />
+
+    @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+    {
+        <div class="d-flex flex-row justify-content-between">
+
+        <a class="btn eu7" href="/Bookmarks/Edit/@Model.Id">Editeaza bookmark</a>
+
+        <div class="d-flex flex-row justify-content-between">
+
+            <form method="post" action="/Bookmarks/Delete/@Model.Id">
+
+                <button class="btn eu8" type="submit">Sterge bookmark</button>
+
+            </form>
+
+        </div>
+
+    </div>
+    }
+    <br />
+    <br />
+
+    <div class="d-flex flex-row justify-content-between">
+        @if (ViewBag.AfisareButoane == true)
+        {
+
+            @if (ViewBag.Vote == false)
+            {
+                <form method="post" action="/Votes/New">
+                    <input type="hidden" name="BookmarkId" value="@Model.Id"></input>
+                    <button class="btn btn-primary eu9" type="submit"><i class="bi bi-star"></i></button>
+                </form>
+            }
+            else
+            {
+                <form method="post" action="/Votes/Delete/@ViewBag.VoteId">
+                    <button class="btn btn-primary eu9" type="submit"><i class="bi bi-star-fill"></i></button>
+                </form>
+            }
+
+        }
+        <div><p class="eu10">Aprecieri: @ViewBag.NumberOfVotes</p></div>
+    </div>
+
+    <form method="post" asp-controller="Bookmarks" asp-action="AddToBoard">
+        <input type="hidden" name="BookmarkId" value="@Model.Id" />
+        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top eu5">
+            <div>
+                <select name="BoardId" class="form-controll">
+                    <option selected>Salveaza!</option>
+                    @foreach(var board in ViewBag.Boards)
+                    {
+                        <option value="@board.Id">@board.Title</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-success alert-success eu6" value="+" />
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+<br />
+<br />
+
+
+@if (TempData["message"] != null)
+{
+    @if (ViewBag.Tip == "1")
+    {
+        
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-check-circle"></i>@ViewBag.message</div>
+    }
+    else
+    {
+        <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5"><i class="bi bi-exclamation-triangle-fill"></i>@ViewBag.message</div>
+    }
+}
+
+@*Imi afisez comentariile pentru fiecare articol*@
+
+@foreach (var com in Model.Comments)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div>
+                    <p>@com.Content</p>
+                    <small>@com.Date</small>
+                    <small>@com.User.UserName</small>
+                </div>
+                <br />
+                <div class="d-flex flex-row justify-content-between">
+                @if (ViewBag.AfisareButoane == true && com.UserId == ViewBag.UserCurent)
+                {
+                        <div>
+                        <a class="btn btn-outline-warning" href="/Comments/Edit/@com.Id"><i class="bi bi-pencil"></i>Editare</a>
+                    </div>
+                }
+                @if (ViewBag.AfisareButoane == true && com.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                {
+                    <form method="post" action="/Comments/Delete/@com.Id">
+
+                        <button class="btn btn-outline-danger" type="submit"><i class="bi bi-eraser"></i>Sterge</button>
+
+                    </form>
+                }
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+}
+<br />
+
+@*Afisez formularul de adaugare a unui nou comentariu*@
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+                <form method="post" action="/Bookmarks/Show/@Model.Id">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="BookmarkId" value="@Model.Id" />
+
+                        <label>Continut comentariu</label>
+                        <br />
+
+                        <textarea class="form-control" name="Content"></textarea>
+
+                        @Html.ValidationMessage("Content", null, new { @class = "text-danger"})
+
+                        <br />
+
+                        <button class="btn btn-primary" type="submit">Adauga comentariul</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>

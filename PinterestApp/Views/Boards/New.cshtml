@@ -1,0 +1,16 @@
+﻿@model PinterestApp.Models.Board
+
+<h2>Creeaza un nou Board cu Bookmark-urile tale preferate!</h2>
+
+<br />
+
+<form method="post" action="/Boards/New">
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <label>Titlu board:</label>
+    <input type="text" name="Title" />
+    <p>@Html.ValidationMessage("Title", null, new { @class = "text-danger" })</p>
+    <br />
+    <br />
+
+    <button class="btn btn-success" type="submit">Adauga board!</button>
+</form>

@@ -1,0 +1,13 @@
+﻿@model PinterestApp.Models.Board
+
+<form method="post" action="/Boards/Edit/@Model.Id">
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <label>Titlu board:</label>
+    <input type="text" name="Title" value="@Model.Title" />
+    <p>@Html.ValidationMessage("Title", null, new { @class = "text-danger" })</p>
+    <br /><br />
+
+    <button class="btn btn-success" type="submit">Modifica board</button>
+
+</form>
